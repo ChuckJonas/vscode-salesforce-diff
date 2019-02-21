@@ -22,6 +22,10 @@ This extension allows you to diff metadata against a Salesforce org.
 
 ## Release Notes
 
+### 0.0.2
+
+- fixed bug where it would always use global sfdx default user (instead of project)
+
 ### 0.0.1
 
 Initial release.  Very limited functionality

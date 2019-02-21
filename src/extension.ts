@@ -29,8 +29,11 @@ export async function activate(context: vscode.ExtensionContext) {
 		async provideTextDocumentContent(uri: vscode.Uri, token: vscode.CancellationToken){
             return new Promise<string>(async (resolve, reject) => {
                 try{
+                    let dir = __dirname;
+                    process.chdir(vscode.workspace.rootPath);
                     let org = await core.Org.create({});
                     let conn = org.getConnection();
+                    process.chdir(dir);
                     let result = await conn.tooling.query<{Body:string}>(
                         `SELECT Name, Body FROM ApexClass WHERE Name = '${path.basename(uri.fsPath,'.cls')}'`
                     );
