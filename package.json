@@ -22,7 +22,8 @@
         "commands": [
             {
                 "command": "extension.diffApexClass",
-                "title": "Diff with Salesforce"
+                "title": "Diff with default org",
+                "category": "SF Diff"
             }
         ],
         "menus": {
