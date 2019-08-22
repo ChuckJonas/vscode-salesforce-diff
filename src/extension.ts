@@ -3,7 +3,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import { TextEditor } from 'vscode';
-import {core } from '@salesforce/command';
+import { core } from '@salesforce/command';
 import * as path from 'path';
 
 // this method is called when your extension is activated
@@ -26,23 +26,24 @@ export async function activate(context: vscode.ExtensionContext) {
 		 * @param token A cancellation token.
 		 * @return A string or a thenable that resolves to such.
 		 */
-		async provideTextDocumentContent(uri: vscode.Uri, token: vscode.CancellationToken){
+        async provideTextDocumentContent(uri: vscode.Uri, token: vscode.CancellationToken) {
             return new Promise<string>(async (resolve, reject) => {
-                try{
+                try {
                     let dir = __dirname;
                     process.chdir(vscode.workspace.rootPath);
                     let org = await core.Org.create({});
                     let conn = org.getConnection();
                     process.chdir(dir);
-                    let result = await conn.tooling.query<{Body:string}>(
-                        `SELECT Name, Body FROM ApexClass WHERE Name = '${path.basename(uri.fsPath,'.cls')}'`
+                    let result = await conn.tooling.query<{ Body: string }>(
+                        `SELECT Name, Body FROM ApexClass WHERE Name = '${path.basename(uri.fsPath, '.cls')}'`
                     );
-                    if(result.done && result.records){
+                    
+                    if (result.done && result.records) {
                         resolve(result.records[0].Body);
-                    }else{
+                    } else {
                         reject(new Error('Could not find source!'));
                     }
-                }catch(e){
+                } catch (e) {
                     reject(e);
                 }
             });
@@ -53,7 +54,7 @@ export async function activate(context: vscode.ExtensionContext) {
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
     let disposable = vscode.commands.registerTextEditorCommand('extension.diffApexClass', async (textEditor: TextEditor) => {
-        let fileName = path.basename(textEditor.document.uri.fsPath,'.cls');
+        let fileName = path.basename(textEditor.document.uri.fsPath, '.cls');
         await vscode.commands.executeCommand(
             'vscode.diff',
             textEditor.document.uri,
