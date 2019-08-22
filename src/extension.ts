@@ -6,6 +6,9 @@ import { TextEditor } from 'vscode';
 import { core } from '@salesforce/command';
 import * as path from 'path';
 
+
+let output = vscode.window.createOutputChannel('salesforce-diff');
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export async function activate(context: vscode.ExtensionContext) {
@@ -33,15 +36,16 @@ export async function activate(context: vscode.ExtensionContext) {
                     process.chdir(vscode.workspace.rootPath);
                     let org = await core.Org.create({});
                     let conn = org.getConnection();
+                    output.appendLine(`Running diff against ${org.getUsername()}`);
                     process.chdir(dir);
-                    let result = await conn.tooling.query<{ Body: string }>(
-                        `SELECT Name, Body FROM ApexClass WHERE Name = '${path.basename(uri.fsPath, '.cls')}'`
-                    );
+                    let qry = `SELECT Name, Body FROM ApexClass WHERE Name = '${path.basename(uri.fsPath, '.cls')}'`;
+                    output.appendLine(`Retrieving source: ${qry}`);
+                    let result = await conn.tooling.query<{ Body: string }>(qry);
                     
-                    if (result.done && result.records) {
+                    if (result.done && result.records && result.records.length) {
                         resolve(result.records[0].Body);
                     } else {
-                        reject(new Error('Could not find source!'));
+                        reject(new Error('Could not find source file!'));
                     }
                 } catch (e) {
                     reject(e);
