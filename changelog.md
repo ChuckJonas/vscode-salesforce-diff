@@ -1,3 +1,8 @@
+# 0.0.6
+
+## Added 
+- Support for any metadata type (experimental)
+
 # 0.0.5
 
 ## Changed 
@@ -20,3 +25,11 @@
 
 ## Added 
 - Basic diff for apex only
+
+## Changed
+- fixed bug where it would always use global sfdx default user (instead of project)
+
+# 0.0.1
+
+## Added
+- Initial release.  Very limited functionality
