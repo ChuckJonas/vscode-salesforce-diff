@@ -2,11 +2,12 @@
     "name": "salesforce-diff",
     "displayName": "Salesforce Diff",
     "description": "Diff local files with what is compiled on salesforce",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "publisher": "chuckjonas",
     "engines": {
         "vscode": "^1.5.0"
     },
+    "icon": "images/diff-icon.png",
     "repository": {
         "type": "git",
         "url": "https://github.com/ChuckJonas/vscode-salesforce-diff"
@@ -15,23 +16,36 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.diffApexClass"
+        "onCommand:extension.diffDefaultOrg",
+        "onCommand:extension.diffSelectOrg"
     ],
     "main": "./out/src/extension",
     "contributes": {
         "commands": [
             {
-                "command": "extension.diffApexClass",
-                "title": "Diff with default org",
-                "category": "SF Diff"
+                "command": "extension.diffDefaultOrg",
+                "title": "SF DIFF: Current Org",
+                "icon": {
+                    "light": "./images/diff-black.png",
+                    "dark": "./images/diff-white.png"
+                }
+            },
+            {
+                "command": "extension.diffSelectOrg",
+                "title": "SF DIFF: Select an Org",
+                "icon": {
+                    "light": "./images/diff-select-black.png",
+                    "dark": "./images/diff-select-white.png"
+                }
             }
         ],
         "menus": {
-            "editor/context": [
+            "editor/title": [
                 {
-                    "when": "resourceLangId == 'apex'",
-                    "command": "extension.diffApexClass",
-                    "title": "Diff with Salesforce"
+                    "when": "resourceLangId == apex || resourceFilename =~ /-meta.xml/",
+                    "command": "extension.diffDefaultOrg",
+                    "alt": "extension.diffSelectOrg",
+                    "group": "navigation"
                 }
             ]
         }
@@ -53,6 +67,8 @@
         "@oclif/config": "1",
         "@oclif/errors": "1",
         "@salesforce/command": "^2.1.0",
-        "@salesforce/core": "^2.1.0"
+        "@salesforce/core": "^2.1.0",
+        "@types/rimraf": "^2.0.2",
+        "rimraf": "^3.0.0"
     }
 }

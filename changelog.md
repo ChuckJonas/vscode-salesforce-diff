@@ -1,3 +1,14 @@
+# 0.0.7
+
+## Added 
+- new command `SF Diff: Select Org` which lets you select any target
+- extension logo
+
+## Changed 
+- renamed `SF Diff: Diff against Default Org` to `SF Diff: Current Org`
+- moved commands to title navigation group & added icons (use alt to run `SF Diff: Select Org`)
+- refactored code
+
 # 0.0.6
 
 ## Added 
