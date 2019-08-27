@@ -12,7 +12,7 @@ This extension allows you to diff metadata against a Salesforce org.
 
 [^*]: Still somewhat untested.  To diff non-apex, you must run command `SF Diff: Diff with Default Org` from command pallet.
 
-![Diff in action](images/demo.gif)
+![demo](https://user-images.githubusercontent.com/5217568/63788182-00da5f80-c8c3-11e9-9522-cec41c99c5d9.gif)
 
 ## Requirements
 
@@ -23,7 +23,8 @@ This extension allows you to diff metadata against a Salesforce org.
 
 Whenever a `cls` or `*-meta.xml` file is open, you'll see an the "SF Diff" icon in the upper left. 
 
-![Usage Icon](images/readme1.png)
+<img width="1157" alt="readme1" src="https://user-images.githubusercontent.com/5217568/63790059-8f9cab80-c8c6-11e9-9be4-8eb700b274c5.png">
+
 
 Clicking this will diff the file against the projects default org.  If you `alt/option` + click, you can select the org to diff against.
 
